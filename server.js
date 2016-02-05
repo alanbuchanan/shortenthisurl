@@ -87,9 +87,9 @@ var handleRoot = (req, res) => {
 	res.sendFile('./html/index.html');
 }
 
-app.get('/')
+app.get('/', handleRoot)
 app.get('/new/:url*', handlePost);
-app.get('/:urlcode', handleUrlReq);
+app.get(/./g, handleUrlReq);
 
 app.delete('/:code', (req, res) => {
 	Link.remove({code: req.url.substr(1)}, result => {
