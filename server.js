@@ -3,8 +3,8 @@ var app = express();
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var port = process.env.PORT || 3000;
-// var thisurl = 'https://shortenthisurl.herokuapp.com/';
-var thisurl = 'http://localhost:3000/';
+var thisurl = 'https://shortenthisurl.herokuapp.com/';
+// var thisurl = 'http://localhost:3000/';
 var path = require('path');
 var mongoURI = 'mongodb://127.0.0.1:27017/shortenthisurl';
 
