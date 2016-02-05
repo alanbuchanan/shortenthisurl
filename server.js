@@ -24,7 +24,7 @@ var handleGet = (req, res) => {
 var handlePost = (req, res) => {
 	var url = req.url.substr(5);
 	console.log('url:', url)
-	var urlCheck = /^((https?):\/\/)?(([w|W]{3}\.)+|)[a-zA-Z0-9\-\.]{3,}\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
+	var urlCheck = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 	if(url.substr(0, 4) !== 'http'){
 		url = 'http://' + url
