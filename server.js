@@ -89,7 +89,7 @@ var handleRoot = (req, res) => {
 
 app.get('/', handleRoot)
 app.get('/new/:url*', handlePost);
-app.get('/:urlcode', handleUrlReq);
+app.get(/^\/(.+)/, handleUrlReq);
 
 app.delete('/:code', (req, res) => {
 	Link.remove({code: req.url.substr(1)}, result => {
