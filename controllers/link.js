@@ -8,8 +8,8 @@ const LinkSchema = require('../models/link');
 
 const Link = mongoose.model('links', LinkSchema);
 
-// const thisurl = 'https://shortenthisurl.herokuapp.com/';
-const thisurl = 'http://localhost:3000/';
+const thisurl = 'https://shortenthisurl.herokuapp.com/';
+// const thisurl = 'http://localhost:3000/';
 
 export default class {
 
