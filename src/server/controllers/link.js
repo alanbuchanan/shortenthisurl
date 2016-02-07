@@ -12,9 +12,8 @@ const Link = mongoose.model('links', LinkSchema);
 let thisurl = 'http://localhost:3000/';
 
 if (process.env.NODE_ENV == 'production') {
-    thisurl = 'https://shortenthisurl.herokuapp.com/';    
+    thisurl = 'https://shortenthisurl.herokuapp.com/';
 }
-
 
 export default class {
 
