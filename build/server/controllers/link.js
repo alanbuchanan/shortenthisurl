@@ -33,8 +33,11 @@ var LinkSchema = require('../models/link');
 
 var Link = _mongoose2.default.model('links', LinkSchema);
 
-var thisurl = 'https://shortenthisurl.herokuapp.com/';
-// const thisurl = 'http://localhost:3000/';
+var thisurl = 'http://localhost:3000/';
+
+if (process.env.NODE_ENV == 'production') {
+    thisurl = 'https://shortenthisurl.herokuapp.com/';
+}
 
 var _class = function () {
     function _class() {
