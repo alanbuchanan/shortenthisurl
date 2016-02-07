@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 import mongoose from 'mongoose';
 import _ from 'lodash';
+import path from 'path';
 
 // How can I do the following LinkSchema with ES6 import/export?
 const LinkSchema = require('../models/link');
@@ -71,7 +72,7 @@ export default class {
     }
 
     handleRoot(req, res){
-        res.sendFile('./views/index.html');
+        res.sendFile('../../views/index.html');
     }
 
     deleteEntry(req, res){

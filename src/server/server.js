@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 const mongoURI = 'mongodb://127.0.0.1:27017/shortenthisurl';
 mongoose.connect(process.env.MONGOLAB_URI || mongoURI, err => {if (err) console.log(err)});
 
-app.use(express.static(path.join(__dirname, './views')));
+app.use(express.static(path.join(__dirname, '../../views')));
 app.get('/', LinkMethods.handleRoot);
 app.get('/new/:url*', LinkMethods.handlePost);
 app.get(/^\/(.+)/, LinkMethods.handleUrlReq);
