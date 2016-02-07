@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-register -w",
+    "test": "mocha src/server/test --compilers js:babel-register -w",
     "start": "nodemon build/server/server.js",
     "build": "babel -w src --out-dir build"
   },
