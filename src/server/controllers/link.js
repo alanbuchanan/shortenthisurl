@@ -4,9 +4,7 @@ import mongoose from 'mongoose';
 import _ from 'lodash';
 import path from 'path';
 
-// How can I do the following LinkSchema with ES6 import/export?
-const LinkSchema = require('../models/link');
-
+import LinkSchema from '../models/link';
 const Link = mongoose.model('links', LinkSchema);
 
 let thisurl = 'http://localhost:3000/';
@@ -17,10 +15,13 @@ if (process.env.NODE_ENV == 'production') {
 
 export default class {
 
+    // User is entering a new url with `/new/:url`
     handlePost(req, res){
+
         let url = req.url.substr(5);
         const urlCheck = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
+        // Make the url http if not already
         if(url.substr(0, 4) !== 'http'){
             url = 'http://' + url;
         }
@@ -32,7 +33,7 @@ export default class {
                 return _.times(length, () => _.sample(alphanumeric)).join('');
             }
 
-            // Post
+            // Post to db
             Link.findOne({ name: url}, function (err, doc){
                 if (err) return console.log(err);
 
@@ -57,16 +58,19 @@ export default class {
             });
 
         } else {
+            // URL doesn't pass the `urlCheck` regex
             res.send({error: 'invalid url'});
         }
 
     }
 
+    // User is entering a code for an existing URL
     handleUrlReq(req, res){
         const code = req.url.substr(1);
 
         Link.findOne({code: code}, (err, doc) => {
             if (doc) {
+                // Redirect the user to the page linked to the urlcode
                 res.redirect(doc.name);
             } else {
                 res.send({error: 'No short URL found'});
@@ -75,13 +79,8 @@ export default class {
     }
 
     handleRoot(req, res){
+        // Landing page
         res.sendFile('../../views/index.html');
-    }
-
-    deleteEntry(req, res){
-        Link.remove({code: req.url.substr(1)}, result => {
-            res.send(result);
-        });
     }
 
 };

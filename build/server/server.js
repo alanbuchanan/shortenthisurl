@@ -26,15 +26,16 @@ var port = process.env.PORT || 3000;
 
 var mongoURI = 'mongodb://127.0.0.1:27017/shortenthisurl';
 _mongoose2.default.connect(process.env.MONGOLAB_URI || mongoURI, function (err) {
-	if (err) console.log(err);
+    if (err) console.log(err);
 });
 
+// Serve static landing page
 app.use(_express2.default.static(_path2.default.join(__dirname, '../../views')));
+
 app.get('/', LinkMethods.handleRoot);
 app.get('/new/:url*', LinkMethods.handlePost);
 app.get(/^\/(.+)/, LinkMethods.handleUrlReq);
-app.delete('/:code', LinkMethods.deleteEntry);
 
 app.listen(port, function () {
-	console.log('Listening on ' + port);
+    console.log('Listening on ' + port);
 });

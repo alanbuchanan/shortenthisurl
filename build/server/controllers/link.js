@@ -22,16 +22,17 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _link = require('../models/link');
+
+var _link2 = _interopRequireDefault(_link);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var app = (0, _express2.default)();
 
-// How can I do the following LinkSchema with ES6 import/export?
-var LinkSchema = require('../models/link');
-
-var Link = _mongoose2.default.model('links', LinkSchema);
+var Link = _mongoose2.default.model('links', _link2.default);
 
 var thisurl = 'http://localhost:3000/';
 
@@ -46,10 +47,14 @@ var _class = function () {
 
     _createClass(_class, [{
         key: 'handlePost',
+
+        // User is entering a new url with `/new/:url`
         value: function handlePost(req, res) {
+
             var url = req.url.substr(5);
             var urlCheck = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
+            // Make the url http if not already
             if (url.substr(0, 4) !== 'http') {
                 url = 'http://' + url;
             }
@@ -64,7 +69,7 @@ var _class = function () {
                         }).join('');
                     };
 
-                    // Post
+                    // Post to db
                     Link.findOne({ name: url }, function (err, doc) {
                         if (err) return console.log(err);
 
@@ -89,9 +94,13 @@ var _class = function () {
                     });
                 })();
             } else {
+                // URL doesn't pass the `urlCheck` regex
                 res.send({ error: 'invalid url' });
             }
         }
+
+        // User is entering a code for an existing URL
+
     }, {
         key: 'handleUrlReq',
         value: function handleUrlReq(req, res) {
@@ -99,6 +108,7 @@ var _class = function () {
 
             Link.findOne({ code: code }, function (err, doc) {
                 if (doc) {
+                    // Redirect the user to the page linked to the urlcode
                     res.redirect(doc.name);
                 } else {
                     res.send({ error: 'No short URL found' });
@@ -108,14 +118,8 @@ var _class = function () {
     }, {
         key: 'handleRoot',
         value: function handleRoot(req, res) {
+            // Landing page
             res.sendFile('../../views/index.html');
-        }
-    }, {
-        key: 'deleteEntry',
-        value: function deleteEntry(req, res) {
-            Link.remove({ code: req.url.substr(1) }, function (result) {
-                res.send(result);
-            });
         }
     }]);
 
